@@ -6,41 +6,37 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 15:04:44 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/26 17:29:17 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/27 16:05:07 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-// need to write list functions !!!
-// init list
-// push to list
-// pop from list
 // sort list
 // free list
 
-void	flag_error(char c)
+void		flag_error(char c)
 {
 	ft_printf("ls: illegal option -- %c \n usage: ls [-Rartl] [file ...]", c);
 	exit(0);
 }
 
-t_list	*path_parsing(char **argv, int nflag)
+t_ls_list	*path_parsing(char **argv, int nflag)
 {
-	t_list *pathlist;
+	t_ls_list	*pathlist;
+	int			type;
+
+	pathlist = initlist();
 
 	while (argv[nflag])
 	{
-		// copy argv[nflag] to list 
-		// iterate nflag 
+		ls_push_list(pathlist, set_list(0, argv[nflag], argv[nflag]));
+		nflag++;
 	}
-
-
-
-	return(pathlist);
+	return (pathlist);
 }
 
-int		flag_parsing(char **argv)
+int			flag_parsing(char **argv)
 {
 	int flag_end;
 	int i;
@@ -67,10 +63,10 @@ int		flag_parsing(char **argv)
 	return (flag_end);
 }
 
-void	arg_parsing(int argc, char **argv)
+void		arg_parsing(int argc, char **argv)
 {
-	int		nflag;
-	t_list	*pathlist;
+	int			nflag;
+	t_ls_list	*pathlist;
 
 	nflag = 0;
 	if (argc < 2)
@@ -79,9 +75,7 @@ void	arg_parsing(int argc, char **argv)
 	}
 	nflag = flag_parsing(argv);
 	pathlist = path_parsing(argv, nflag);
-	// sort list
-	// split it for 2 parts (1st is invalid and 2nd is valid)
-	// print invalid list and delete from memory
+	// arg_parsing should return path_list
 	ft_printf("%d, %d, %d, %d, %d", g_flags.a, g_flags.cr, g_flags.l, g_flags.r, g_flags.t);
 
 }

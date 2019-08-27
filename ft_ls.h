@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 16:51:01 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/26 16:48:46 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/27 12:26:34 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,24 @@ typedef struct	s_ls_flags {
 	bool	cr;
 }				t_ls_flags;
 
-void	arg_parsing(int argc, char **argv);
+typedef struct	s_file_info {
+	int		type;
+	char	*name;
+	char	*path;
+}				t_file_info;
 
+typedef struct	s_ls_list {
+	struct s_list_node	*top;
+	int					cap;
+}				t_ls_list;
+
+typedef struct	s_list_node {
+	struct s_file_info	*file_info;
+	struct s_list_node	*next;
+}				t_list_node;
+
+void		arg_parsing(int argc, char **argv);
+t_file_info	*set_list(int type, char *name, char *path);
 
 extern t_ls_flags g_flags;
 #endif
