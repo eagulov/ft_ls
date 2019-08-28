@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 15:04:44 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/27 16:05:07 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/28 14:34:14 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void		flag_error(char c)
 	exit(0);
 }
 
-t_ls_list	*path_parsing(char **argv, int nflag)
-{
-	t_ls_list	*pathlist;
-	int			type;
+// t_ls_list	*path_parsing(char **argv, int nflag)
+// {
+// 	t_ls_list	*pathlist;
+// 	int			type;
 
-	pathlist = initlist();
+// 	pathlist = initlist();
 
-	while (argv[nflag])
-	{
-		ls_push_list(pathlist, set_list(0, argv[nflag], argv[nflag]));
-		nflag++;
-	}
-	return (pathlist);
-}
+// 	while (argv[nflag])
+// 	{
+// 		ls_push_list(pathlist, set_list(0, argv[nflag], argv[nflag]));
+// 		nflag++;
+// 	}
+// 	return (pathlist);
+// }
 
-int			flag_parsing(char **argv)
+int			arg_parsing(char **argv)
 {
 	int flag_end;
 	int i;
@@ -61,21 +61,4 @@ int			flag_parsing(char **argv)
 		flag_end++;
 	}
 	return (flag_end);
-}
-
-void		arg_parsing(int argc, char **argv)
-{
-	int			nflag;
-	t_ls_list	*pathlist;
-
-	nflag = 0;
-	if (argc < 2)
-	{
-		while (0);
-	}
-	nflag = flag_parsing(argv);
-	pathlist = path_parsing(argv, nflag);
-	// arg_parsing should return path_list
-	ft_printf("%d, %d, %d, %d, %d", g_flags.a, g_flags.cr, g_flags.l, g_flags.r, g_flags.t);
-
 }

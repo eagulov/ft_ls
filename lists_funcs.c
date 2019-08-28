@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 11:33:39 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/27 16:00:49 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/28 15:46:58 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_file_info	*ls_pop_list(t_ls_list *pathlist)
 	pathlist->top = pathlist->top->next;
 	tmp_info = tmp->file_info;
 	free(tmp);
+	pathlist->cap -= 1;
 	return (tmp_info);
 }
 
@@ -33,7 +34,7 @@ t_list_node	*new_node(t_file_info *infolist)
 	n_node = (t_list_node *)malloc(sizeof(t_list_node));
 	n_node->file_info = infolist;
 	n_node->next = NULL;
-	return (new_node);
+	return (n_node);
 }
 
 void		ls_push_list(t_ls_list *pathlist, t_file_info *infolist)
