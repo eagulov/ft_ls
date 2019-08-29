@@ -6,35 +6,17 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 15:04:44 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/28 14:34:14 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/29 16:21:56 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-// sort list
-// free list
 
 void		flag_error(char c)
 {
 	ft_printf("ls: illegal option -- %c \n usage: ls [-Rartl] [file ...]", c);
 	exit(0);
 }
-
-// t_ls_list	*path_parsing(char **argv, int nflag)
-// {
-// 	t_ls_list	*pathlist;
-// 	int			type;
-
-// 	pathlist = initlist();
-
-// 	while (argv[nflag])
-// 	{
-// 		ls_push_list(pathlist, set_list(0, argv[nflag], argv[nflag]));
-// 		nflag++;
-// 	}
-// 	return (pathlist);
-// }
 
 int			arg_parsing(char **argv)
 {

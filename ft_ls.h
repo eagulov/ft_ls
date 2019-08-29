@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 16:51:01 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/28 15:48:07 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/29 16:17:32 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ int				arg_parsing(char **argv);
 t_file_info		*set_list(int type, char *name, char *path);
 t_ls_list		*split_list(char **argv, int flag_end);
 void			ls_push_list(t_ls_list *pathlist, t_file_info *infolist);
-t_ls_list		*initlist(void);
+t_ls_list		*initlist(t_list_node *node);
 t_file_info		*ls_pop_list(t_ls_list *pathlist);
+t_list_node		*new_node(t_file_info *infolist);
+void			print_list(t_ls_list *list, char *title);
+void			free_list(t_ls_list *list);
+void			sort_list(t_list_node **headref);
 
 extern t_ls_flags g_flags;
 #endif
