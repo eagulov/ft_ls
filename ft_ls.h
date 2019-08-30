@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 16:51:01 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/29 16:17:32 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/30 13:13:51 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "ft_printf/ft_printf.h"
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 typedef struct	s_ls_flags {
 	bool				l;
@@ -48,8 +50,11 @@ t_ls_list		*initlist(t_list_node *node);
 t_file_info		*ls_pop_list(t_ls_list *pathlist);
 t_list_node		*new_node(t_file_info *infolist);
 void			print_list(t_ls_list *list, char *title);
+void			print_inv_files(t_ls_list *list);
 void			free_list(t_ls_list *list);
 void			sort_list(t_list_node **headref);
+void			print_reg_files(t_ls_list *list);
+void			parse_dirs(t_ls_list *list_dirs, bool first);
 
 extern t_ls_flags g_flags;
 #endif
