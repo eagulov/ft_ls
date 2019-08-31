@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 13:17:00 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/29 13:22:42 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/31 15:03:37 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ t_list_node	*new_node(t_file_info *infolist)
 	return (n_node);
 }
 
-t_file_info	*set_list(int type, char *name, char *path)
+t_file_info	*set_list(char *name, char *path)
 {
 	t_file_info *infolist;
 
 	infolist = (t_file_info *)malloc(sizeof(t_file_info));
-	infolist->name = name;
-	infolist->path = path;
-	infolist->type = type;
+	infolist->name = ft_strdup(name);
+	infolist->path = ft_strdup(path);
 	return (infolist);
 }

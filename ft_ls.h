@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 16:51:01 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/30 13:13:51 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/31 14:56:37 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_list_node {
 }				t_list_node;
 
 int				arg_parsing(char **argv);
-t_file_info		*set_list(int type, char *name, char *path);
+t_file_info		*set_list(char *name, char *path);
 t_ls_list		*split_list(char **argv, int flag_end);
 void			ls_push_list(t_ls_list *pathlist, t_file_info *infolist);
 t_ls_list		*initlist(t_list_node *node);
