@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 11:34:51 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/31 15:14:03 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/31 19:35:08 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		parse_dirs(t_ls_list *list_dirs, bool first)
 			if (!first)
 				ft_printf("%s:\n", temp->file_info->path);
 			print_reg_files(files_list);
+			write(1, "\n", 1);
 			if (g_flags.cr)
 				get_dirs(files_list);
 			free_list(files_list);

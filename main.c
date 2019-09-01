@@ -6,16 +6,26 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 17:50:24 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/31 15:26:38 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/08/31 19:39:18 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-// fix dirs names before printing
 // make l, t, r flags
 
 t_ls_flags g_flags = {0, 0, 0, 0, 0};
+
+void		print_not_dirs(t_ls_list *inv, t_ls_list *files)
+{
+	sort_list(&(inv->top));
+	print_inv_files(inv);
+	free_list(inv);
+	sort_list(&(files->top));
+	print_reg_files(files);
+	free_list(files);
+	write(1, "\n", 1);
+}
 
 t_ls_list	*split_list(char **argv, int end)
 {
@@ -39,11 +49,8 @@ t_ls_list	*split_list(char **argv, int end)
 		end++;
 		ft_bzero(&stats, sizeof(struct stat));
 	}
-	sort_list(&(inv->top));
-	print_inv_files(inv);
-	free_list(inv);
-	print_reg_files(files);
-	free_list(files);
+	if (files->top || inv->top)
+		print_not_dirs(inv, files);
 	return (dirs);
 }
 
@@ -57,7 +64,10 @@ int	main(int argc, char **argv)
 	if (flag_end == argc)
 		ls_push_list(arg_dirs, set_list(".", "."));
 	sort_list(&(arg_dirs->top));
-	parse_dirs(arg_dirs, true);
+	if (argc - 1 == flag_end)
+		parse_dirs(arg_dirs, true);
+	else
+		parse_dirs(arg_dirs, false);
 	free_list(arg_dirs);
 	while(1);
 	return (0);
