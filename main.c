@@ -6,13 +6,15 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 17:50:24 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/31 19:39:18 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:22:59 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-// make l, t, r flags
+// flag r
+// extra \n
+// bag with reg_files in args
 
 t_ls_flags g_flags = {0, 0, 0, 0, 0};
 
@@ -64,11 +66,11 @@ int	main(int argc, char **argv)
 	if (flag_end == argc)
 		ls_push_list(arg_dirs, set_list(".", "."));
 	sort_list(&(arg_dirs->top));
-	if (argc - 1 == flag_end)
+	if (argc - 1 == flag_end || argc == flag_end)
 		parse_dirs(arg_dirs, true);
 	else
 		parse_dirs(arg_dirs, false);
 	free_list(arg_dirs);
-	while(1);
+	// while(1);
 	return (0);
 }

@@ -6,11 +6,33 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/29 14:25:06 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/29 16:20:28 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:18:11 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+t_list_node	*time_sorted_merge(t_list_node *a, t_list_node *b)
+{
+	t_list_node *res;
+
+	res = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (sort_time(a, b))
+	{
+		res = a;
+		res->next = time_sorted_merge(a->next, b);
+	}
+	else
+	{
+		res = b;
+		res->next = time_sorted_merge(a, b->next);
+	}
+	return (res);
+}
 
 void		frnt_bck_splt(t_list_node *source, t_list_node **frnt,
 														t_list_node **bck)
@@ -34,7 +56,7 @@ void		frnt_bck_splt(t_list_node *source, t_list_node **frnt,
 	slow->next = NULL;
 }
 
-t_list_node	*sorted_merge(t_list_node *a, t_list_node *b)
+t_list_node	*lex_sorted_merge(t_list_node *a, t_list_node *b)
 {
 	t_list_node *res;
 
@@ -46,17 +68,17 @@ t_list_node	*sorted_merge(t_list_node *a, t_list_node *b)
 	if (ft_strcmp(a->file_info->name, b->file_info->name) < 0)
 	{
 		res = a;
-		res->next = sorted_merge(a->next, b);
+		res->next = lex_sorted_merge(a->next, b);
 	}
 	else
 	{
 		res = b;
-		res->next = sorted_merge(a, b->next);
+		res->next = lex_sorted_merge(a, b->next);
 	}
 	return (res);
 }
 
-void		sort_list(t_list_node **headref)
+void		merge_sort(t_list_node **headref, bool t)
 {
 	t_list_node *a;
 	t_list_node *b;
@@ -66,7 +88,19 @@ void		sort_list(t_list_node **headref)
 	if (head == NULL || head->next == NULL)
 		return ;
 	frnt_bck_splt(head, &a, &b);
-	sort_list(&a);
-	sort_list(&b);
-	*headref = sorted_merge(a, b);
+	merge_sort(&a, t);
+	merge_sort(&b, t);
+	if (!t)
+		*headref = lex_sorted_merge(a, b);
+	else
+		*headref = time_sorted_merge(a, b);
+}
+
+void		sort_list(t_list_node **headref)
+{
+	merge_sort(headref, false);
+	if (g_flags.t)
+		merge_sort(headref, true);
+	if (g_flags.r)
+		*headref = reverse_list(*headref);
 }

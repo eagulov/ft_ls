@@ -6,11 +6,30 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 11:33:39 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/29 15:45:34 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 11:08:42 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+t_list_node	*reverse_list(t_list_node *list)
+{
+	t_list_node	*a;
+	t_list_node	*b;
+	t_list_node	*c;
+
+	a = NULL;
+	b = list;
+	c = (list)->next;
+	while (b)
+	{
+		c = b->next;
+		b->next = a;
+		a = b;
+		b = c;
+	}
+	return (a);
+}
 
 void		free_list(t_ls_list *list)
 {

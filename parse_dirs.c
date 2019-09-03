@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 11:34:51 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/31 19:35:08 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:00:24 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,29 @@ char		*mk_path(char *dir, char *file_name)
 	return (res);
 }
 
-t_ls_list	*get_files(DIR *dir, t_list_node *temp)
+int			get_files(DIR *dir, t_list_node *temp, t_ls_list **list)
 {
 	t_ls_list		*files_list;
 	struct dirent	*dp;
+	struct stat		stats;
+	int				total;
 
+	total = 0;
 	files_list = initlist(NULL);
 	while ((dp = readdir(dir)) != NULL)
 	{
 		if (dp->d_name[0] != '.' || g_flags.a)
+		{
 			ls_push_list(files_list, new_file(dp->d_name,\
 				mk_path(temp->file_info->path, dp->d_name)));
+			lstat(files_list->top->file_info->path, &stats);
+			files_list->top->file_info->tspec = stats.st_mtimespec;
+			files_list->top->file_info->filestat = stats;
+			total += stats.st_blocks;
+		}
 	}
-	return (files_list);
+	*list = files_list;
+	return (total);
 }
 
 void		parse_dirs(t_ls_list *list_dirs, bool first)
@@ -94,6 +104,7 @@ void		parse_dirs(t_ls_list *list_dirs, bool first)
 	DIR				*dir;
 	t_list_node		*temp;
 	t_ls_list		*files_list;
+	int				total;
 
 	temp = list_dirs->top;
 	while (temp)
@@ -102,11 +113,11 @@ void		parse_dirs(t_ls_list *list_dirs, bool first)
 			ft_printf("ls: %s: Permission denied\n", temp->file_info->name);
 		else
 		{
-			files_list = get_files(dir, temp);
+			total = get_files(dir, temp, &files_list);
 			sort_list(&(files_list->top));
 			if (!first)
 				ft_printf("%s:\n", temp->file_info->path);
-			print_reg_files(files_list);
+			print_l_reg_files(files_list, total);
 			write(1, "\n", 1);
 			if (g_flags.cr)
 				get_dirs(files_list);

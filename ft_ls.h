@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 16:51:01 by eagulov           #+#    #+#             */
-/*   Updated: 2019/08/31 14:56:37 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 13:56:55 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <dirent.h>
+# include <pwd.h>
+# include <grp.h>
+# include <sys/xattr.h>
+# include <sys/ioctl.h>
+# include <sys/acl.h>
 
 typedef struct	s_ls_flags {
 	bool				l;
@@ -27,9 +32,10 @@ typedef struct	s_ls_flags {
 }				t_ls_flags;
 
 typedef struct	s_file_info {
-	int					type;
+	struct timespec		tspec;
 	char				*name;
 	char				*path;
+	struct stat			filestat;
 }				t_file_info;
 
 typedef struct	s_ls_list {
@@ -55,6 +61,10 @@ void			free_list(t_ls_list *list);
 void			sort_list(t_list_node **headref);
 void			print_reg_files(t_ls_list *list);
 void			parse_dirs(t_ls_list *list_dirs, bool first);
+t_list_node		*reverse_list(t_list_node *list);
+int				sort_time(t_list_node *one, t_list_node *two);
+void			print_permissions(t_file_info *info);
+void			print_l_reg_files(t_ls_list *list, int total);
 
 extern t_ls_flags g_flags;
 #endif
