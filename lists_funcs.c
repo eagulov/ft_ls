@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 11:33:39 by eagulov           #+#    #+#             */
-/*   Updated: 2019/09/03 11:08:42 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/03 19:14:13 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		free_list(t_ls_list *list)
 	{
 		tmp2 = tmp;
 		free(tmp2->file_info->path);
+		free(tmp2->file_info->name);
 		free(tmp2->file_info);
 		tmp = tmp->next;
 		free(tmp2);

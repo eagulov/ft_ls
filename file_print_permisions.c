@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:25:25 by eagulov           #+#    #+#             */
-/*   Updated: 2019/09/03 13:51:04 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/10 11:38:04 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void					print_permissions(t_file_info *info)
 	print_fileacl(info->path), info->filestat.st_nlink,\
 	pw->pw_name, gr->gr_name, info->filestat.st_size, monthdaytime);
 	if ((readlink(info->path, buf, NAME_MAX)) == -1)
-		ft_printf("%s\n", info->name);
+		ft_printf("%s", info->name);
 	else
-		ft_printf("%s -> %s\n", info->name, buf);
+		ft_printf("%s -> %s", info->name, buf);
 	free(perms);
 }

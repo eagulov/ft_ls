@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 10:58:56 by eagulov           #+#    #+#             */
-/*   Updated: 2019/09/03 13:56:26 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/10 11:46:44 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ void		print_reg_files(t_ls_list *list)
 	while (temp)
 	{
 		if (g_flags.l)
+		{
 			print_permissions(temp->file_info);
+			if (temp->next)
+				write(1, "\n", 1);
+		}
 		else
 			ft_printf("%s \t", temp->file_info->name);
 		temp = temp->next;

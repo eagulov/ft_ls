@@ -6,7 +6,7 @@
 /*   By: eagulov <eagulov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 11:34:51 by eagulov           #+#    #+#             */
-/*   Updated: 2019/09/03 14:00:24 by eagulov          ###   ########.fr       */
+/*   Updated: 2019/09/10 11:39:56 by eagulov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 t_file_info	*new_file(char *name, char *path)
 {
 	t_file_info	*infolist;
+	struct stat	stats;
 
+	lstat(path, &stats);
 	infolist = (t_file_info *)malloc(sizeof(t_file_info));
 	infolist->name = ft_strdup(name);
 	infolist->path = path;
+	infolist->tspec = stats.st_mtimespec;
+	infolist->filestat = stats;
 	return (infolist);
 }
 
@@ -78,7 +82,6 @@ int			get_files(DIR *dir, t_list_node *temp, t_ls_list **list)
 {
 	t_ls_list		*files_list;
 	struct dirent	*dp;
-	struct stat		stats;
 	int				total;
 
 	total = 0;
@@ -89,10 +92,7 @@ int			get_files(DIR *dir, t_list_node *temp, t_ls_list **list)
 		{
 			ls_push_list(files_list, new_file(dp->d_name,\
 				mk_path(temp->file_info->path, dp->d_name)));
-			lstat(files_list->top->file_info->path, &stats);
-			files_list->top->file_info->tspec = stats.st_mtimespec;
-			files_list->top->file_info->filestat = stats;
-			total += stats.st_blocks;
+			total += files_list->top->file_info->filestat.st_blocks;
 		}
 	}
 	*list = files_list;
@@ -116,9 +116,8 @@ void		parse_dirs(t_ls_list *list_dirs, bool first)
 			total = get_files(dir, temp, &files_list);
 			sort_list(&(files_list->top));
 			if (!first)
-				ft_printf("%s:\n", temp->file_info->path);
+				ft_printf("\n%s:\n", temp->file_info->path);
 			print_l_reg_files(files_list, total);
-			write(1, "\n", 1);
 			if (g_flags.cr)
 				get_dirs(files_list);
 			free_list(files_list);
